@@ -36,7 +36,6 @@ folder_path= r"dataset"
 llm = ChatOpenAI(
     model='gpt-4o',
     temperature=0,
-    max_tokens=100,
     top_p=1,
 )
 model_kwargs = {'device': 'cpu'}
@@ -116,6 +115,8 @@ def create_csv_vector_db(file_path):
     # Save the updated vector database
     vectordb.save_local(vector_db_file_path)
 
+system_prompt_string = load_system_prompt()
+
 def get_QA_chain():
     
     # Load the vector database from the local folder
@@ -127,10 +128,10 @@ def get_QA_chain():
                         search_type="similarity_score_threshold", 
                         search_kwargs={
                             "score_threshold": 0.2,
-                            "k": 20
+                            "k": 30
                             }
                         )
-        system_prompt_string = load_system_prompt()
+        
 
         system_prompt = (system_prompt_string)
 
@@ -152,7 +153,7 @@ def get_QA_chain():
 
 if __name__ == "__main__":
     # create_vector_db(folder_path)
-    # create_vector_db(folder_path)
+    create_vector_db(folder_path)
     # create_csv_vector_db('csv_dataset/courses_info.csv')
     chain = get_QA_chain()
     print(chain.invoke({"input": "What can you tell me about iba?"}))
