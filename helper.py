@@ -135,7 +135,7 @@ def get_QA_chain():
 
         system_prompt = (system_prompt_string)
 
-        prompt = ChatPromptTemplate.from_messages(
+        prompt = ChatPromptTemplate.from_messages(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
             [
                 ("system", system_prompt),
                 ("human", "{input}"),
