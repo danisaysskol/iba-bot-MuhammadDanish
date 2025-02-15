@@ -1,5 +1,5 @@
 import streamlit as st
-from helper import get_QA_chain, create_vector_db, folder_path
+from helper import get_QA_chain
 
 chain = get_QA_chain()
 
@@ -13,10 +13,12 @@ def get_relevant_prompts(chain,ans):
     st.write('\nResponse from Model: '.upper())
     st.write(ans['answer'])
 
-    st.write('\nReference From Data:\n'.upper())
+    st.write('\n# [References From Data]:\n'.upper())
     num_of_indexs = len(ans['context'])
     for i in range(num_of_indexs):
         st.write(i+1,((ans['context'])[i]).page_content)
+        if i == 19:
+            break
        
 
 st.title("IBA Chatbot Q&A ")
@@ -31,3 +33,4 @@ if question:
     st.header("Answer")
     # st.write(response["answer"])
     get_relevant_prompts(chain,response)
+    print(chain)

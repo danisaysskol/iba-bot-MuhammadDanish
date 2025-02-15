@@ -1,15 +1,12 @@
 from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
-from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain.chains import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.prompts import ChatPromptTemplate
 from dotenv import load_dotenv
-from langchain_core.documents import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from load_system_prompt import load_system_prompt
-from langchain_community.document_loaders import TextLoader
 import nltk
 from nltk import data
 from langchain_community.document_loaders import PyPDFLoader
@@ -35,7 +32,7 @@ folder_path= r"dataset"
 
 llm = ChatOpenAI(
     model='gpt-4o',
-    temperature=0,
+    temperature=0.1,
     top_p=1,
 )
 model_kwargs = {'device': 'cpu'}
@@ -125,10 +122,11 @@ def get_QA_chain():
 
         # Create a retriever for querying the vector database
         retriever = vectordb.as_retriever(
+                        # search_type="mmr", k=50 
                         search_type="similarity_score_threshold", 
                         search_kwargs={
                             "score_threshold": 0.2,
-                            "k": 30
+                            "k": 50
                             }
                         )
         
