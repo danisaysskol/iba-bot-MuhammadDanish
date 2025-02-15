@@ -153,7 +153,7 @@ def get_QA_chain():
 
 if __name__ == "__main__":
     # create_vector_db(folder_path)
-    create_vector_db(folder_path)
+    # create_vector_db(folder_path)
     # create_csv_vector_db('csv_dataset/courses_info.csv')
     chain = get_QA_chain()
     print(chain.invoke({"input": "What can you tell me about iba?"}))
